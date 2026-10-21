@@ -10,9 +10,19 @@
       ./hardware-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot.enable = false;
+    efi = {
+      efiSysMountPoint = "/boot";
+      canTouchEfiVariables = false;
+    };
+    grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+    };
+  };
 
   # networking.hostName = "nixos"; # Define your hostname.
 
@@ -37,9 +47,6 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-
-  
-
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
@@ -59,12 +66,13 @@
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users."chris" = {
+  users.users.chris = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
+    shell = pkgs.fish;
   };
 
   # programs.firefox.enable = true;
@@ -86,6 +94,10 @@
     enable = true;
     pinentryPackage = pkgs.pinentry-gtk2;
     enableSSHSupport = true;
+  };
+
+  programs = {
+    fish.enable = true;
   };
 
   # List services that you want to enable:
