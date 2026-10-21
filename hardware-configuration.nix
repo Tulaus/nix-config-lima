@@ -23,8 +23,8 @@
     };
 
   fileSystems."/mnt/lima-cidata" =
-    { device = "/dev/disk/by-uuid/2026-10-20-23-42-45-75";
-      fsType = "iso9660";
+    { device = "/dev/disk/by-label/cidata";
+      fsType = "auto";
     };
 
   fileSystems."/Users/chris/Codex" =

@@ -7,12 +7,13 @@
     nixos-lima.url = "github:nixos-lima/nixos-lima/";
   };
   
-  outputs = inputs@{ nixpkgs, ... }:
+  outputs = inputs@{ nixpkgs, nixos-lima, ... }:
   {
     nixosConfigurations.lima = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
-      specialArgs = { inherit inputs secrets; };
+      specialArgs = { inherit inputs; };
       modules = [
+        nixos-lima.nixosModules.lima
         ./configuration.nix
       ];
     };
