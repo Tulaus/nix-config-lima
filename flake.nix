@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-lima.url = "github:nixos-lima/nixos-lima/";
   };
   
@@ -14,7 +16,14 @@
       specialArgs = { inherit inputs; };
       modules = [
         nixos-lima.nixosModules.lima
-        ./configuration.nix
+        ./hosts/lima
+        home-manager.nixosModules.default
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.extraSpecialArgs = {
+            inherit inputs;
+          };
+        }
       ];
     };
   };
