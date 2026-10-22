@@ -9,7 +9,7 @@
     nixos-lima.url = "github:nixos-lima/nixos-lima/";
   };
   
-  outputs = inputs@{ nixpkgs, nixos-lima, ... }:
+  outputs = inputs@{ nixpkgs, nixos-lima, home-manager, ... }:
   {
     nixosConfigurations.lima = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
